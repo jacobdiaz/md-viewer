@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1d1d1f;
+  --muted: #6e6e73;
+  --rule: #d2d2d7;
+  --code-bg: #f5f5f7;
+  --quote-bar: #c7c7cc;
+  --link: #0a64d6;
+  --table-stripe: #fafafa;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1c1e;
+    --fg: #f2f2f7;
+    --muted: #98989f;
+    --rule: #3a3a3c;
+    --code-bg: #2c2c2e;
+    --quote-bar: #48484a;
+    --link: #5ac8fa;
+    --table-stripe: #232325;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1c1e;
+  --fg: #f2f2f7;
+  --muted: #98989f;
+  --rule: #3a3a3c;
+  --code-bg: #2c2c2e;
+  --quote-bar: #48484a;
+  --link: #5ac8fa;
+  --table-stripe: #232325;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.65 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 56px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 56px 40px 120px;
+}
+
+main {
+  flex: 0 1 740px;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+#toc {
+  flex: 0 0 200px;
+  position: sticky;
+  top: 56px;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.4;
+}
+#toc .toc-title {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+#toc ul { list-style: none; padding: 0; margin: 0; }
+#toc ul ul { padding-left: 12px; border-left: 1px solid var(--rule); margin-left: 3px; }
+#toc li { margin: 0; }
+#toc li + li { margin-top: 0; }
+#toc a {
+  display: block;
+  padding: 4px 8px;
+  color: var(--muted);
+  border-radius: 5px;
+}
+#toc a:hover { color: var(--fg); text-decoration: none; }
+#toc a.active { color: var(--link); font-weight: 600; }
+
+@media (max-width: 900px) {
+  #toc { display: none; }
+  .layout { padding: 40px 24px 96px; }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 1.6em 0 0.5em;
+}
+h1, h2, h3, h4, h5, h6 { scroll-margin-top: 24px; }
+h1 { font-size: 2.2em; margin-top: 0; padding-bottom: 0.3em; border-bottom: 1px solid var(--rule); }
+h2 { font-size: 1.6em; padding-bottom: 0.25em; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.28em; }
+h4, h5, h6 { font-size: 1.05em; color: var(--muted); }
+
+p, ul, ol, blockquote, pre, table, hr { margin: 0 0 1.1em; }
+ul, ol { padding-left: 1.6em; }
+li + li { margin-top: 0.3em; }
+li > ul, li > ol { margin: 0.3em 0 0; }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+strong { font-weight: 650; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.2em 0; }
+
+blockquote {
+  margin-left: 0;
+  padding: 0.1em 1.1em;
+  color: var(--muted);
+  border-left: 3px solid var(--quote-bar);
+}
+
+code, pre, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.87em;
+}
+:not(pre) > code {
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+pre {
+  background: var(--code-bg);
+  padding: 16px 18px;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+pre code { font-size: inherit; }
+
+img { max-width: 100%; height: auto; border-radius: 6px; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  font-size: 0.95em;
+}
+th, td {
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+th { font-weight: 600; background: var(--code-bg); }
+tbody tr:nth-child(even) td { background: var(--table-stripe); }
+
+input[type="checkbox"] { margin-right: 0.4em; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <main id="content"></main>
+  <nav id="toc" aria-label="Table of contents"></nav>
+</div>
+<script>/*__MARKDOWN_IT__*/</script>
+<script>
+(function () {
+  var source = __MARKDOWN_JSON__;
+  var content = document.getElementById("content");
+  var toc = document.getElementById("toc");
+  var md = window.markdownit({ html: false, linkify: true });
+  content.innerHTML = md.render(source);
+
+  // Give every heading a unique id so the TOC can link to it.
+  var seen = {};
+  function slugify(text) {
+    var base = text.toLowerCase().trim().replace(/[^\p{L}\p{N}\s-]/gu, "").replace(/\s+/g, "-") || "section";
+    var slug = base, n = 1;
+    while (seen[slug]) { slug = base + "-" + (n++); }
+    seen[slug] = true;
+    return slug;
+  }
+
+  var headings = Array.prototype.slice.call(content.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+  headings.forEach(function (h) { h.id = slugify(h.textContent); });
+
+  if (headings.length === 0) { toc.remove(); return; }
+
+  // Nest by heading level: each heading is a child of the nearest shallower heading above it.
+  var root = document.createElement("ul");
+  var stack = [{ level: 0, list: root }];
+  var links = [];
+  headings.forEach(function (h) {
+    var level = Number(h.tagName.charAt(1));
+    while (stack[stack.length - 1].level >= level) { stack.pop(); }
+    var item = document.createElement("li");
+    var link = document.createElement("a");
+    link.href = "#" + h.id;
+    link.textContent = h.textContent;
+    item.appendChild(link);
+    var sublist = document.createElement("ul");
+    item.appendChild(sublist);
+    stack[stack.length - 1].list.appendChild(item);
+    stack.push({ level: level, list: sublist });
+    links.push({ id: h.id, link: link });
+  });
+  root.querySelectorAll("ul:empty").forEach(function (ul) { ul.remove(); });
+
+  var title = document.createElement("p");
+  title.className = "toc-title";
+  title.textContent = "On this page";
+  toc.appendChild(title);
+  toc.appendChild(root);
+
+  // Jump in-page without relying on the web view's fragment navigation.
+  links.forEach(function (entry) {
+    entry.link.addEventListener("click", function (event) {
+      event.preventDefault();
+      document.getElementById(entry.id).scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  // Highlight the section currently at the top of the viewport.
+  function updateActive() {
+    var current = headings[0];
+    for (var i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top <= 96) { current = headings[i]; } else { break; }
+    }
+    links.forEach(function (entry) {
+      entry.link.classList.toggle("active", entry.id === current.id);
+    });
+  }
+  window.addEventListener("scroll", updateActive, { passive: true });
+  updateActive();
+})();
+</script>
+</body>
+</html>
