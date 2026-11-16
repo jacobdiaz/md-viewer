@@ -4,7 +4,7 @@ A small, native macOS app for reading Markdown. It renders `.md` and `.markdown`
 
 ## Install
 
-1. Download `MDViewer-0.1.0.dmg` from the [Releases page](https://github.com/jacobdiaz/md-viewer/releases).
+1. Download `MDViewer-1.0.0.dmg` from the [Releases page](https://github.com/jacobdiaz/md-viewer/releases).
 2. Open the DMG and drag **MD Viewer** onto the **Applications** folder.
 3. Eject the DMG.
 
@@ -39,7 +39,7 @@ Requires macOS 14 or later and Xcode command-line tools (Swift 6 toolchain).
 
 ```sh
 ./scripts/build-app.sh   # build/MDViewer.app
-./scripts/build-dmg.sh   # build/MDViewer-0.1.0.dmg
+./scripts/build-dmg.sh   # build/MDViewer-1.0.0.dmg
 ```
 
 `build-app.sh` compiles the release binary, assembles the `.app` bundle, copies the bundled markdown-it renderer and page template, and registers the document types with Launch Services. `build-dmg.sh` runs it and packages the result with an Applications shortcut.
