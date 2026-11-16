@@ -60,3 +60,4 @@ Requires macOS 14 or later and Xcode command-line tools (Swift 6 toolchain).
 - Code blocks are not syntax-highlighted yet.
 - The file is read when it opens. Edits on disk need the window closed and reopened.
 - The app is ad-hoc signed, not notarized, so it needs the first-launch step above.
+- Images next to a document in Downloads, Desktop, or Documents need macOS folder permission. The text always renders; those images appear once access is granted. Only files inside the document's folder are loaded.

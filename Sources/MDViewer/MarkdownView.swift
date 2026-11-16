@@ -13,7 +13,9 @@ struct MarkdownView: NSViewRepresentable {
     }
 
     func makeNSView(context: Context) -> WKWebView {
-        let webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
+        let configuration = WKWebViewConfiguration()
+        configuration.setURLSchemeHandler(context.coordinator.documentFolder, forURLScheme: DocumentFolderSchemeHandler.scheme)
+        let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = context.coordinator
         return webView
     }
@@ -25,12 +27,15 @@ struct MarkdownView: NSViewRepresentable {
         coordinator.lastFileURL = fileURL
 
         // Relative links and images resolve against the document's folder.
-        let baseURL = fileURL?.deletingLastPathComponent()
+        let folder = fileURL?.deletingLastPathComponent()
+        let baseURL = folder.flatMap(DocumentFolderSchemeHandler.baseURL(for:))
+        coordinator.documentFolder.folder = folder
         coordinator.baseURL = baseURL
         webView.loadHTMLString(Renderer.html(for: markdown), baseURL: baseURL)
     }
 
     final class Coordinator: NSObject, WKNavigationDelegate {
+        let documentFolder = DocumentFolderSchemeHandler()
         var lastMarkdown: String?
         var lastFileURL: URL?
         var baseURL: URL?
@@ -52,7 +57,7 @@ struct MarkdownView: NSViewRepresentable {
             }
 
             // Web links go to the browser; local files (including other .md files) go to their default app.
-            NSWorkspace.shared.open(url)
+            NSWorkspace.shared.open(DocumentFolderSchemeHandler.fileURL(from: url) ?? url)
             decisionHandler(.cancel)
         }
 
